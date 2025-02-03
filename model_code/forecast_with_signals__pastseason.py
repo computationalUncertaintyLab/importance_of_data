@@ -81,6 +81,8 @@ def model(rng_key = None, location=None, cases=None,hosps=None, X=None, VE=None,
                 if errs is not None:
                     err_vales = jnp.interp(t,ts,errs)
                     log_R0    = jnp.log(R0) + np.sum(beta_cov*x) + err_vales
+                else:
+                    log_R0    = jnp.log(R0) + np.sum(beta_cov*x)
             
             return  jnp.clip( jnp.exp(log_R0), 0,10) #<--un-reasonable to be outisde this range
             
@@ -827,40 +829,42 @@ if __name__ == "__main__":
 
         all_forecasts = pd.concat([weekly_forecast_data,peak_forecast_time_data, peak_forecast_intensity_data])
         all_forecasts.to_csv("./forecasts/with_signals/all_forecasts__{:s}__{:s}.csv".format(location,thisweek))
+
+        pickle.dump(posterior_samples, open("./time_dep_transmission_rate/with_signals_posterior_samples.pkl","wb"))
         
         return None
 
     #---------------------------------------------------------------------------------------------------
     # If the User wants to run only the US forecast presented in the paper then uncomment this code
-    # for location in sorted(inc_hosps.location.unique()):
-    #     if location =="US":
-    #         compute_forecasts(location=location,time=None,peak_time=None,peak_value=None)
+    for location in sorted(inc_hosps.location.unique()):
+        if location =="US":
+            compute_forecasts(location=location,time=None,peak_time=None,peak_value=None)
     #---------------------------------------------------------------------------------------------------
     
     #---------------------------------------------------------------------------------------------------
     # If the user wants to run all states plus the US forecasts than un comment the below code
     #---------------------------------------------------------------------------------------------------
-    dask.config.set({
-        "distributed.worker.memory.target"   : 0.6,   # Triggers memory management at 60% usage
-        "distributed.worker.memory.spill"    : 0.7,    # Moves data to disk at 70% usage
-        "distributed.worker.memory.pause"    : 0.8,    # Pauses tasks at 80% usage
-        "distributed.worker.memory.terminate": 0.9}) # Restarts worker at 90% usage
+    # dask.config.set({
+    #     "distributed.worker.memory.target"   : 0.6,   # Triggers memory management at 60% usage
+    #     "distributed.worker.memory.spill"    : 0.7,    # Moves data to disk at 70% usage
+    #     "distributed.worker.memory.pause"    : 0.8,    # Pauses tasks at 80% usage
+    #     "distributed.worker.memory.terminate": 0.9}) # Restarts worker at 90% usage
     
-    from dask.distributed import Client
+    # from dask.distributed import Client
 
-    client = Client(n_workers=10,threads_per_worker=1, processes=True,timeout="120s", heartbeat_interval="30s")
-    client.restart()
+    # client = Client(n_workers=10,threads_per_worker=1, processes=True,timeout="120s", heartbeat_interval="30s")
+    # client.restart()
 
-    def try_forecast(location):
-        try:
-            compute_forecasts(location=location,time=None,peak_time=None,peak_value=None)
-        except:
-            print("Failed = {:s}".format(location))
+    # def try_forecast(location):
+    #     try:
+    #         compute_forecasts(location=location,time=None,peak_time=None,peak_value=None)
+    #     except:
+    #         print("Failed = {:s}".format(location))
             
-    tasks   = [ delayed(try_forecast)(location=location) for location in sorted(inc_hosps.location.unique()) ]
+    # tasks   = [ delayed(try_forecast)(location=location) for location in sorted(inc_hosps.location.unique()) ]
 
-    try:
-        results = compute(*tasks)
-    except Exception as e:
-        print(f"Error during computation: {e}")
-    client.close()
+    # try:
+    #     results = compute(*tasks)
+    # except Exception as e:
+    #     print(f"Error during computation: {e}")
+    # client.close()
