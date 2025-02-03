@@ -15,7 +15,6 @@ The weekly percent positive influenza cases at state and US national level are c
 The dataset that is produced is called `./data_sets/clinical_and_public_lab_data.csv`. 
 This dataset is then foremmated with the code `./formatlab_data.py`. That code produces a formatted lab dataset that is used for analysis called `./data_sets/clinical_and_public_lab_data__formatted.csv`
 
-
 **Public ILI data from ILI-NET**    
 1. Code to download this data is `./download_epidata.py`.
 2. Data is downloaded using the delphi-epidata package
@@ -34,6 +33,12 @@ The dataset that is produced is called `./data_sets/weekly_weather_data.csv`.
 2. Data is downloaded using modified code from the CDC FluSight GitHub Repository
 The weekly number of incident hospitalizations at state level and a US national estimate is produced.   
 The dataset that is produced is called `./data_sets/target-hospital-admissions.csv`.
+
+**Flu Percent reported data from NHSN**
+1. Code to download this data is `./download_percent_reported_hosps.py`.
+2. Data is downloaded from the CDC HHS datset.
+The weekly percent of all providers reporting at state level and a US national estimate is produced.   
+The dataset that is produced is called `./data_sets/pct_hospital_reporting.csv`.
 
 **Population data**   
 Population data for each state was taken from the CDC hosted FluSIght GitHub repository. 
