@@ -64,6 +64,8 @@ The visual is stored in the folder `./viz/data_signals.pdf`.
 In the suppleement or 'Technical documentation' there is a map that presents each of the cities where weather data was collected.
 The script to produce that map is at `./plot_of_us_cities.py` and the map is stored in `./viz/map_data.pdf`
 
+# Contact
+Interested individuals can contact Prof Thomas McAndrew at `mcandrew@lehigh.edu`.
 
 
 
