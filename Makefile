@@ -49,3 +49,8 @@ run_forecasts_past_no_signals:
 output_for_viz_past:
 	@echo "Produce visual"
 	@$(VENV_PYTHON) compare_us_with_and_without_signals.py
+
+output_map_of_cities:
+	@echo "Produce map of cities"
+	@$(VENV_PYTHON) plot_of_us_cities.py
+
