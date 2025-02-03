@@ -37,6 +37,11 @@ The dataset that is produced is called `./data_sets/target-hospital-admissions.c
 Population data for each state was taken from the CDC hosted FluSIght GitHub repository. 
 This data is a single csv, was downloaded, and storeed in `./data_sets/locations.csv`.
 
+**Vaccine Efficacy data from MMWR reports**
+The estimated seasonal vaccine efficacy was taken from MMWR reports. 
+The dataset is at `./data_sets/VE_mmwr.csv` and includes links to each MMWR report from which data was extracted. 
+
+
 ## Forecast (transmisison model) code
 The code to produce the two (red and blue) forecasts presented in the manuscript is located at `./model_code/forecast_with_signals__pastseason.py`
 This code produces forecasts for all states and a US national forecast for the previous 2023/24 influenza season in the northern hemisphere. 
