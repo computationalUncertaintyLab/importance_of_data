@@ -60,6 +60,9 @@ All forecasts for this model are stored in `./forecasts_without_signals/`.
 The visual in the manuscript is created with the script `compare_us_with_and_without_signals.py`.
 The visual is stored in the folder `./viz/data_signals.pdf`.
 
+## Map visual in supplement
+In the suppleement or 'Technical documentation' there is a map that presents each of the cities where weather data was collected.
+The script to produce that map is at `./plot_of_us_cities.py` and the map is stored in `./viz/map_data.pdf`
 
 
 
