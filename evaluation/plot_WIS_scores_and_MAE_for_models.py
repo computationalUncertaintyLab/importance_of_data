@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 import matplotlib.lines as mlines
+import scienceplots
 
 
 if __name__ == "__main__":
@@ -14,6 +15,7 @@ if __name__ == "__main__":
 
     evals = pd.read_csv("./evaluation_metrics.csv")
 
+    plt.style.use("science")
 
     fig, axs = plt.subplots(1,2)
 
