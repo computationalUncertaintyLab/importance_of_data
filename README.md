@@ -13,6 +13,8 @@ If the user does not with to actively collect new data then the datasets used fo
 2. Data is downloaded using the cdcfluview package
 The weekly percent positive influenza cases at state and US national level are collected from 2015 to present.
 The dataset that is produced is called `./data_sets/clinical_and_public_lab_data.csv`. 
+This dataset is then foremmated with the code `./formatlab_data.py`. That code produces a formatted lab dataset that is used for analysis called `./data_sets/clinical_and_public_lab_data__formatted.csv`
+
 
 **Public ILI data from ILI-NET**    
 1. Code to download this data is `./download_epidata.py`.
