@@ -27,10 +27,25 @@ The weekly temperature and pressure measuremnts for the three largest cities in 
 In the code is a list of all the major cities and how the US average is computed.  
 The dataset that is produced is called `./data_sets/weekly_weather_data.csv`. 
 
-**HFlu Hospitalization data from NHSN** 
+**Flu Hospitalization data from NHSN** 
 1. Code to download this data is `./get_target_data.R`.
 2. Data is downloaded using modified code from the CDC FluSight GitHub Repository
 The weekly number of incident hospitalizations at state level and a US national estimate is produced.   
-The dataset that is produced is called `./data_sets/target-hospital-admissions.csv`. 
+The dataset that is produced is called `./data_sets/target-hospital-admissions.csv`.
+
+**Population data**
+Population data for each state was taken from the CDC hosted FluSIght GitHub repository. 
+This data is a single csv, was downloaded, and storeed in `./data_sets/locations.csv`.
+
+## Forecast (transmisison model) code
+The code to produce the two (red and blue) forecasts presented in the manuscript is located at `./model_code/forecast_with_signals__pastseason.py`
+This code produces forecasts for all states and a US national forecast for the previous 2023/24 influenza season in the northern hemisphere. 
+This code uses the above datasets to produce the blue forecast. All forecats for this model are stored in `./forecasts_with_signals/`.
+The red forecast uses only the NHSN data and is located at `./model_code/forecast_without_signals__pastseason.py`
+
+
+
+
+
 
 
