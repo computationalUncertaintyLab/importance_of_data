@@ -48,12 +48,14 @@ This data is a single csv, was downloaded, and storeed in `./data_sets/locations
 The estimated seasonal vaccine efficacy was taken from MMWR reports. 
 The dataset is at `./data_sets/VE_mmwr.csv` and includes links to each MMWR report from which data was extracted. 
 
+## Forecast (transmission model) code
+The code to produce the two (red and blue) forecasts presented in the manuscript is located at `./model_code`.   
+These codes produce forecasts for all states and a US national forecast for the previous 2023/24 influenza season in the northern hemisphere.
+The following code `./model_code/forecast_with_signals__pastseason.py` uses the above datasets to produce the blue forecast.
+All forecasts for this model are stored in `./forecasts_with_signals/`.   
+The red forecast uses only the NHSN data and is located at `./model_code/forecast_without_signals__pastseason.py`.
+All forecasts for this model are stored in `./forecasts_without_signals/`.
 
-## Forecast (transmisison model) code
-The code to produce the two (red and blue) forecasts presented in the manuscript is located at `./model_code/forecast_with_signals__pastseason.py`
-This code produces forecasts for all states and a US national forecast for the previous 2023/24 influenza season in the northern hemisphere. 
-This code uses the above datasets to produce the blue forecast. All forecats for this model are stored in `./forecasts_with_signals/`.
-The red forecast uses only the NHSN data and is located at `./model_code/forecast_without_signals__pastseason.py`
 
 
 
