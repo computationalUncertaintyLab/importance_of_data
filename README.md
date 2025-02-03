@@ -56,6 +56,9 @@ All forecasts for this model are stored in `./forecasts_with_signals/`.
 The red forecast uses only the NHSN data and is located at `./model_code/forecast_without_signals__pastseason.py`.
 All forecasts for this model are stored in `./forecasts_without_signals/`.
 
+## Forecast Visualization
+The visual in the manuscript is created with the script `compare_us_with_and_without_signals.py`.
+The visual is stored in the folder `./viz/data_signals.pdf`.
 
 
 
