@@ -1,4 +1,4 @@
-# When Data Disappear: The Cost of Policy on Public Health
+# When Data Disappear: Public Health Pays As Policy Strays
 
 All code to download the data, run the forecasts, and produce the figure in this manuscript are contained in a Makefile. 
 The entire pipeline can be run by typing `make` in the terminal. 
