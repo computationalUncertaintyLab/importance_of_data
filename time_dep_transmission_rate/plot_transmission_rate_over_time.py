@@ -43,7 +43,7 @@ if __name__ == "__main__":
     sns.lineplot(x = "week", y="value", hue="model", data = time_dep_transmission,ax=ax, palette = ["blue","red"])
 
     ax.set_xlabel("Forecast horizon (weeks)")
-    ax.set_ylabel("Time dependent effective reproduction number")
+    ax.set_ylabel("Time dependent\neffective reproduction\nnumber")
 
     blue_line = mlines.Line2D([], [], color='blue', label='US model with all data sources')
     red_line = mlines.Line2D([], [], color='red'  , label='US model without data sources')
