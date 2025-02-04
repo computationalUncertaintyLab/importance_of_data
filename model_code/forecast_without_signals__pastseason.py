@@ -160,7 +160,7 @@ def model(rng_key = None, location=None, cases=None,hosps=None, X=None, VE=None,
         #--dynamical system paramaters
         dynamics = {}
         dynamics['R0']        = jnp.array(x[:,1]).reshape(-1,1)
-        dynamics['gamma']     = (7./7)*jnp.ones( (NSAMPLES,1) )                #--infectious period is something like 7 days or one week #jnp.array(x[:,2]).reshape(-1,1)  
+        dynamics['gamma']     = (3./7)*jnp.ones( (NSAMPLES,1) )                #--infectious period is something like 7 days or one week #jnp.array(x[:,2]).reshape(-1,1)  
         
         dynamics['phi']       = jnp.array(x[:,2]).reshape(-1,1)
         dynamics['alpha']     = jnp.array(x[:,3]).reshape(-1,1)
@@ -265,7 +265,7 @@ def model(rng_key = None, location=None, cases=None,hosps=None, X=None, VE=None,
     for n,x in enumerate(["R0","phi","alpha"]):
         dynamics[x] = thetas[0][1+n].reshape(1,1,1) 
     dynamics["vacc"]     = jnp.full_like(dynamics["R0"] , 1./2)
-    dynamics["gamma"]    = jnp.full_like(dynamics["R0"] , 7./7)
+    dynamics["gamma"]    = jnp.full_like(dynamics["R0"] , 3./7)
     dynamics["delta"]   = jnp.full_like( dynamics["R0"] , 7./5)
     dynamics["exposed"] = jnp.full_like( dynamics["R0"] , 7./2)
 
@@ -329,18 +329,12 @@ def model(rng_key = None, location=None, cases=None,hosps=None, X=None, VE=None,
             S   = numpyro.sample("S", dist.Normal( logit(S), 10 ))
             S   = expit(S)
 
-            beta_season_mean = numpyro.sample("beta_season_mean", dist.LogNormal(0,1))
-            beta_season_err  = numpyro.sample("beta_season_err" , dist.LogNormal(0,1))
-            with season_plate:
-                GP1_season   = numpyro.sample("GP1_season", dist.Gamma(beta_season_mean,1) ) # dist.Beta(beta_season_err*beta_season_mean,beta_season_err*(1-beta_season_mean) ))
-                GP2_season   = numpyro.sample("GP2_season", dist.Gamma(10,1))
-                
         with type_plate:
             Gp1mean = numpyro.sample("Gp1mean", dist.Beta(1,1))
             Gp1err  = numpyro.sample("Gp1err" , dist.LogNormal(0,1))
 
             with season_plate:
-                GP1_season_   = numpyro.sample("GP1_season_", dist.Beta( Gp1mean*Gp1err, (1-Gp1mean)*Gp1err ) )
+                GP1_season_   = numpyro.sample("GP1_season_", dist.LogNormal( Gp1mean, Gp1err ) )
                 
         #-- residual termd for log R0
         Ks_season        = jax.vmap(jax.vmap(lambda omega: expfunc( jnp.arange(T),omega)))(GP1_season_)
@@ -348,7 +342,6 @@ def model(rng_key = None, location=None, cases=None,hosps=None, X=None, VE=None,
         deltas_season = deltas_season.at[...,0].set(0)
         deltas_season = deltas_season.reshape(ntypes,nseasons,T)
         deltas_season = jnp.clip( deltas_season, -jnp.inf,0 )
-        
  
         
         #--covariate parameters
@@ -364,7 +357,7 @@ def model(rng_key = None, location=None, cases=None,hosps=None, X=None, VE=None,
         
         dynamics["vacc"]      = jnp.full_like(grand_R0s, 1./2)
         
-        dynamics["gamma"]     = jnp.full_like(grand_R0s, 7./7)
+        dynamics["gamma"]     = jnp.full_like(grand_R0s, 3./7)
         
         dynamics["delta"]     = jnp.full_like(grand_R0s, 7./5)
         dynamics["exposed"]   = jnp.full_like(grand_R0s, 7./2)
@@ -827,6 +820,8 @@ if __name__ == "__main__":
 
         all_forecasts = pd.concat([weekly_forecast_data,peak_forecast_time_data, peak_forecast_intensity_data])
         all_forecasts.to_csv("./forecasts/without_signals/all_forecasts__{:s}__{:s}.csv".format(location,thisweek))
+
+        pickle.dump(posterior_samples, open("./time_dep_transmission_rate/without_signals_posterior_samples.pkl","wb"))
         
         return None
 

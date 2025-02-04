@@ -46,9 +46,19 @@ run_forecasts_past_no_signals:
 	@echo "Forecasting 2023/24 Season withOUT Signals"
 	@$(VENV_PYTHON) ./model_code/forecast_without_signals__pastseason.py
 
-output_for_viz_past:
-	@echo "Produce visual"
-	@$(VENV_PYTHON) compare_us_with_and_without_signals.py
+evaluation_metrics:
+	@echo "Run evaluation metrics"
+	@$(VENV_PYTHON) ./evaluation/prepare_forecast_data_for_evaluation.py
+	@$(R) ./evaluation/score_all_model_forecasts.R
+	@$(VENV_PYTHON) ./evaluation/plot_WIS_scores_and_MAE_for_models.py
+
+produce_time_dep_repo_num:
+	@echo "Run Time dependent repo number"
+	@$(VENV_PYTHON) ./time_dep_transmission_rate/plot_transmission_rate_over_time.py
+
+produce_figure_one_forecasts:
+	@echo "Produce Fig 1 visual"
+	@$(VENV_PYTHON) comparison_of_forecasts_blue_and_red.py
 
 output_map_of_cities:
 	@echo "Produce map of cities"
