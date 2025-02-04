@@ -7,8 +7,8 @@ import pandas as pd
 if __name__ == "__main__":
 
 
-    forecast_with_signals    = pd.read_csv("../forecasts/with_signals/weekly_forecasts__US__2025-02-08.csv")
-    forecast_without_signals = pd.read_csv("../forecasts/without_signals/weekly_forecasts__US__2025-02-08.csv")
+    forecast_with_signals    = pd.read_csv("./forecasts/with_signals/weekly_forecasts__US__2025-02-08.csv")
+    forecast_without_signals = pd.read_csv("./forecasts/without_signals/weekly_forecasts__US__2025-02-08.csv")
 
     #--add model column
     forecast_with_signals["model"]    = "with_signals"
@@ -16,7 +16,7 @@ if __name__ == "__main__":
 
 
     #--add truth data
-    hospitalizations = pd.read_csv("../data_sets/target-hospital-admissions.csv")
+    hospitalizations = pd.read_csv("./data_sets/target-hospital-admissions.csv")
     
     forecasts = pd.concat([forecast_with_signals, forecast_without_signals])
     forecasts = forecasts.merge( hospitalizations, left_on = ["location","target_end_date"], right_on = ["location","date"]  )
@@ -27,7 +27,7 @@ if __name__ == "__main__":
 
     forecasts = forecasts[ ["model","location","target","target_end_date","horizon","output_type", "quantile_level","predicted","observed"] ]
     
-    forecasts.to_csv("./forecasts_formatted_for_evaluation.csv",index=False)
+    forecasts.to_csv("./evaluation/forecasts_formatted_for_evaluation.csv",index=False)
     
 
     
