@@ -11,7 +11,6 @@ forecast: run_forecasts
 
 download_all_data: build_env download_clinical_data download_ili download_weather_data
 
-
 build_env:
 	@echo "build forecast environment"
 	@$(PYTHON) -m venv $(VENV_DIR)
@@ -59,6 +58,10 @@ produce_time_dep_repo_num:
 produce_figure_one_forecasts:
 	@echo "Produce Fig 1 visual"
 	@$(VENV_PYTHON) comparison_of_forecasts_blue_and_red.py
+
+produce_data_signals_plot:
+	@echo "Produce datasignals visual"
+	@$(VENV_PYTHON) build_data_signals.py
 
 output_map_of_cities:
 	@echo "Produce map of cities"
